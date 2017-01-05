@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Murmures{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+<style type="text/css">
+    a {
+        color: inherit;
+        text-decoration: underline dotted;
+    }
+
+    h2 {
+        font-weight: 500;
+    }
+    h4 {
+        font-weight: 400;
+    }
+</style>
+{% endblock %}
+{% block content %}
+{% set content = "Woups, apparemment il n'y a rien pour aujourd'hui." %}
+{% set subtext = "Je serais tenté de dire que c'est pas moi." %}
+{% if murmure is not none %}
+    {% set content = murmure.content %}
+    {% set subtext = murmure.subtext %}
+{% endif %}
+<header class="conteneur">
+    <span><h2 class="animated fadeInUp">{{content}}</h2></span>
+    <span><h4 class="animated fadeInDown">{{subtext}}</h4></span>
+</header>
+{% endblock %}
+{% block footer %} &mdash; <a href="{{ url_for('logout') }}">Déconnexion</a>{% endblock %}

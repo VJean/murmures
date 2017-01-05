@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Connexion{{super()}}{% endblock %}
+{% block content %}
+<div class="conteneur">
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.username.label }} {{ form.username(size=20) }}
+      </p>
+      {% if form.username.errors %}
+      {% for error in form.username.errors %}
+        <span> {{error}} </span>
+      {% endfor %}
+      {% endif %}
+      <p>
+          {{ form.password.label }} {{ form.password(size=20) }}
+      </p>
+      {% if form.password.errors %}
+      {% for error in form.password.errors %}
+        <span> {{error}} </span>
+      {% endfor %}
+      {% endif %}
+      <p><input type="submit" value="Connexion"></p>
+  </form>
+</div>
+{% endblock %}

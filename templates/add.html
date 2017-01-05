@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Nouveau murmure{{super()}}{% endblock %}
+{% block content %}
+<div class="conteneur">
+<form action="" method="post" name="add">
+  {{ form.hidden_tag() }}
+  <p>
+      {{ form.publishdate.label }} {{ form.publishdate }}
+  </p>
+  {% if form.publishdate.errors %}
+    {% for error in form.publishdate.errors %}
+      <span> {{error}} </span>
+    {% endfor %}
+  {% endif %}
+  <p>
+      {{ form.content.label }} {{ form.content(size=80) }}
+  </p>
+  {% if form.content.errors %}
+    {% for error in form.content.errors %}
+      <span> {{error}} </span>
+    {% endfor %}
+  {% endif %}
+  <p>
+      {{ form.subtext.label }} {{ form.subtext(size=80) }}
+  </p>
+  {% if form.subtext.errors %}
+    {% for error in form.subtext.errors %}
+      <span> {{error}} </span>
+    {% endfor %}
+  {% endif %}
+  <p><input type="submit" value="Ajouter"></p>
+</form>
+</div>
+<div class="conteneur">
+  {% for m in murmures %}
+    <p>{{ m.publishdate }}<br>{{ m.content }} <em>{{ m.subtext }}</em></p><br>
+  {% endfor %}
+</div>
+{% endblock %}
