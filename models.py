@@ -31,5 +31,5 @@ class Murmure(db.Model):
     __tablename__ = 'murmures'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    subtext = db.Column(db.Text)
-    publishdate = db.Column(db.Date, nullable=False, unique=True)
+    subtext = db.Column(db.Text, nullable=False)
+    publishdate = db.Column(db.Date, unique=True)

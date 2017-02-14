@@ -11,11 +11,5 @@ class LoginForm(FlaskForm):
 
 
 class MurmureForm(FlaskForm):
-    publishdate = DateField('publier le', format='%d/%m/%Y', validators=[DataRequired()])
     content = StringField('contenu', validators=[DataRequired()])
-    subtext = StringField('texte additionnel', validators=[])
-
-    def validate_publishdate(form, field):
-        forbidden = [m[0] for m in db.session.query(Murmure.publishdate).all()]
-        if field.data in forbidden:
-            raise ValidationError('Un murmure a déjà cette date de publication')
+    subtext = StringField('texte additionnel', validators=[DataRequired()])

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, redirect, url_for, request, abort
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from datetime import date
@@ -60,6 +60,11 @@ def logout():
 @login_required
 def index():
     murmure = Murmure.query.filter(Murmure.publishdate == date.today()).first()
+    if murmure is None:
+        murmure = Murmure.query.filter(Murmure.publishdate == None).order_by(Murmure.id).first()
+        if current_user.username == 'alexia':
+            murmure.publishdate = date.today()
+            db.session.commit()
     return render_template('index.html', murmure=murmure)
 
 
@@ -74,7 +79,7 @@ def add():
         db.session.commit()
         return redirect(url_for('add'))
 
-    murmures = Murmure.query.order_by(Murmure.publishdate.desc()).all()
+    murmures = Murmure.query.order_by(Murmure.id.desc()).all()
     return render_template('add.html', form=form, murmures=murmures)
 
 
