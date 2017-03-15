@@ -62,7 +62,7 @@ def index():
     murmure = Murmure.query.filter(Murmure.publishdate == date.today()).first()
     if murmure is None:
         murmure = Murmure.query.filter(Murmure.publishdate == None).order_by(Murmure.id).first()
-        if current_user.username == 'alexia':
+        if murmure is not None and current_user.username == 'alexia':
             murmure.publishdate = date.today()
             db.session.commit()
     return render_template('index.html', murmure=murmure)
