@@ -1,4 +1,5 @@
 import os, sys
+import pushover
 from flask import Flask
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
@@ -29,6 +30,7 @@ db.create_all()
 
 lm.login_view = 'login'
 
+pushover_client = pushover.Client(app.config['PUSHOVER_USER_KEY'], api_token=app.config['PUSHOVER_API_KEY'])
 
 @lm.user_loader
 def load_user(user_id):
@@ -71,6 +73,12 @@ def index():
         if murmure is not None and current_user.username == 'alexia':
             murmure.publishdate = date.today()
             db.session.commit()
+            left = Murmure.query.filter(Murmure.publishdate == None).all()
+            nleft = len(left)
+            if nleft == 1:
+                pushover_client.send_message("Il ne reste plus qu'un murmure en stock.", title="Ajouter des murmures")
+            elif nleft == 0:
+                pushover_client.send_message("Le dernier murmure a été vu.", title="Ajouter des murmures")
     return render_template('index.html', murmure=murmure)
 
 
