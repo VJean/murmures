@@ -1,3 +1,4 @@
+import os, sys
 from flask import Flask
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
@@ -8,6 +9,11 @@ from datetime import date
 from forms import LoginForm, MurmureForm
 from util import require_username, is_safe_url
 from models import db, Murmure, User
+
+
+if not os.path.isfile("./config.py"):
+    print('Please copy default_config.py to config.py and fill it with your own data.')
+    sys.exit()
 
 app = Flask(__name__)
 app.config.from_object('config')
