@@ -76,9 +76,9 @@ def index():
             left = Murmure.query.filter(Murmure.publishdate == None).all()
             nleft = len(left)
             if nleft == 1:
-                pushover_client.send_message("Il ne reste plus qu'un murmure en stock.", title="Ajouter des murmures")
+                pushover_client.send_message("Il ne reste plus qu'un murmure à voir.", title="Murmures")
             elif nleft == 0:
-                pushover_client.send_message("Le dernier murmure a été vu.", title="Ajouter des murmures")
+                pushover_client.send_message("Le dernier murmure a été vu.", title="Murmures")
     return render_template('index.html', murmure=murmure)
 
 
