@@ -32,6 +32,11 @@ lm.login_view = 'login'
 
 pushover_client = pushover.Client(app.config['PUSHOVER_USER_KEY'], api_token=app.config['PUSHOVER_API_KEY'])
 
+
+def notify_few_remaining(message):
+    pushover_client.send_message(message, title="Murmures", url=url_for(add), url_title="Ajouter un murmure")
+
+
 @lm.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -76,9 +81,9 @@ def index():
             left = Murmure.query.filter(Murmure.publishdate == None).all()
             nleft = len(left)
             if nleft == 1:
-                pushover_client.send_message("Il ne reste plus qu'un murmure en stock.", title="Ajouter des murmures")
+                notify_few_remaining("Il ne reste plus qu'un murmure en stock.")
             elif nleft == 0:
-                pushover_client.send_message("Le dernier murmure a été vu.", title="Ajouter des murmures")
+                notify_few_remaining("Le dernier murmure a été vu.")
     return render_template('index.html', murmure=murmure)
 
 
