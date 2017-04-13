@@ -81,7 +81,7 @@ def index():
             left = Murmure.query.filter(Murmure.publishdate == None).all()
             nleft = len(left)
             if nleft == 1:
-                notify_few_remaining("Il ne reste plus qu'un murmure en stock.")
+                notify_few_remaining("Il ne reste plus qu'un murmure à voir.")
             elif nleft == 0:
                 notify_few_remaining("Le dernier murmure a été vu.")
     return render_template('index.html', murmure=murmure)
