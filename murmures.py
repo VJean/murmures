@@ -34,7 +34,7 @@ pushover_client = pushover.Client(app.config['PUSHOVER_USER_KEY'], api_token=app
 
 
 def notify_few_remaining(message):
-    pushover_client.send_message(message, title="Murmures", url=url_for('add'), url_title="Ajouter un murmure")
+    pushover_client.send_message(message, title="Murmures", url=url_for('add', _external=True), url_title="Ajouter un murmure")
 
 
 @lm.user_loader
