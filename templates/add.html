@@ -25,7 +25,14 @@
 </div>
 <div class="conteneur">
   {% for m in murmures %}
-    {% if m.publishdate %}<p>{{ m.publishdate }}<br>{% endif %}{{ m.content }} <em>{{ m.subtext }}</em></p><br>
+    <p>
+    {{ m.content }} <em>{{ m.subtext }}</em>
+    <br>
+    {% if m.publishdate %}(publié le {{ m.publishdate }})
+    {% else %}(<a href="{{url_for('edit', mid=m.id)}}">modifier</a>)
+    {% endif %}
+    </p>
+    <br>
   {% endfor %}
 </div>
 {% endblock %}

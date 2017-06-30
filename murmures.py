@@ -1,7 +1,7 @@
 import os, sys
 import pushover
 from flask import Flask
-from flask import render_template, redirect, url_for, request, abort
+from flask import flash, render_template, redirect, url_for, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
@@ -100,6 +100,31 @@ def add():
 
     murmures = Murmure.query.order_by(Murmure.id.desc()).all()
     return render_template('add.html', form=form, murmures=murmures)
+
+
+@app.route('/edit/<int:mid>', methods=['GET', 'POST'])
+@require_username('jean', 'index')
+def edit(mid):
+    form = MurmureForm()
+    m = Murmure.query.get(mid)
+
+    if m is None:
+        flash('The requested item does not exist.')
+        return redirect(url_for('index'))
+    elif m.publishdate is not None:
+        flash('Cannot edit an item that has alreay been displayed.')
+        return redirect(url_for('index'))
+
+    if form.validate_on_submit():
+        m.content = form.content.data
+        m.subtext = form.subtext.data
+        db.session.commit()
+        return redirect(url_for('index'))
+
+    form.content.data = m.content
+    form.subtext.data = m.subtext
+
+    return render_template('edit.html', form=form)
 
 
 if __name__ == '__main__':
