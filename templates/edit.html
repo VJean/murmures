@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Édition{{super()}}{% endblock %}
+{% block content %}
+<div class="conteneur">
+<form action="" method="post" name="edit">
+  {{ form.hidden_tag() }}
+  <p>
+      {{ form.content.label }} {{ form.content(size=80) }}
+  </p>
+  {% if form.content.errors %}
+    {% for error in form.content.errors %}
+      <span> {{error}} </span>
+    {% endfor %}
+  {% endif %}
+  <p>
+      {{ form.subtext.label }} {{ form.subtext(size=80) }}
+  </p>
+  {% if form.subtext.errors %}
+    {% for error in form.subtext.errors %}
+      <span> {{error}} </span>
+    {% endfor %}
+  {% endif %}
+  <p><input type="submit" value="Valider"></p>
+</form>
+</div>
+{% endblock %}
